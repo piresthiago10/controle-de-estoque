@@ -1,2 +1,2 @@
-# controle-de-estoque
+# Controle de Estoque
 Simples controle de estoque
