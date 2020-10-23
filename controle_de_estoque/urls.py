@@ -1,21 +1,21 @@
-"""controle_de_estoque URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
+from produto.api.viewsets import ProdutoViewSet
+from categoria.api.viewsets import CategoriaViewSet
+from usuario.api.viewsets import UsuarioViewSet
+from tipo_usuario.api.viewsets import TipoUsuarioViewSet
+from estoque_entrada.api.viewsets import EstoqueEntradaViewSet
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'produto', ProdutoViewSet, basename='Produto')
+router.register(r'categoria', CategoriaViewSet)
+router.register(r'usuario', UsuarioViewSet)
+router.register(r'tipo_usuario', TipoUsuarioViewSet)
+router.register(r'estoque_entrada', EstoqueEntradaViewSet)
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('admin/', admin.site.urls),
 ]
