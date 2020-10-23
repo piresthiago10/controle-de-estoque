@@ -38,6 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'usuario',
+    'tipo_usuario',
+    'produto',
+    'categoria',
+    'estoque_entrada',
+    'estoque_saida',
 ]
 
 MIDDLEWARE = [
@@ -119,3 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = 'imagens'
+
+MEDIA_URL = '/media/'
