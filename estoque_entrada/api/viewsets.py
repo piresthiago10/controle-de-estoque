@@ -4,6 +4,9 @@ from rest_framework import status
 from estoque_entrada.models import EstoqueEntrada
 from produto.models import Produto
 from .serializers import EstoqueEntradaSerializer
+from produto.api.serializers import ProdutoSerializer
+from produto.api.viewsets import ProdutoViewSet
+from produto.models import Produto
 
 
 class EstoqueEntradaViewSet(ModelViewSet):
@@ -15,11 +18,14 @@ class EstoqueEntradaViewSet(ModelViewSet):
         produto_queryset = Produto.objects.filter(id=request.data['produto'])
         quantidade_entrada = int(request.data['quantidade_entrada'])
         quantidade_produto = produto_queryset[0].quantidade_estoque
-        print(type(quantidade_entrada), type(quantidade_produto))
         quantidade_produto = quantidade_produto + quantidade_entrada
-        produto_serializer = self.get_serializer(data=dict(produto_queryset))
-        produto_serializer.is_valid(raise_exception=True)
-        self.perform_create(produto_serializer)
+        produto_serializer = ProdutoSerializer(produto_queryset, many=True)
+        produto_data = produto_serializer.data
+        produto_data[0]['quantidade_estoque'] = quantidade_produto
+        produto = Produto.objects.get(id=request.data['produto'])
+        produto.quantidade_estoque = produto_data[0]['quantidade_estoque']
+        produto.save()
+        
 
         entrada_serializer = self.get_serializer(data=request.data)
         entrada_serializer.is_valid(raise_exception=True)
