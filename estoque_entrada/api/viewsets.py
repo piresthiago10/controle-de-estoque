@@ -1,12 +1,12 @@
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.response import Response
-from rest_framework import status
 from estoque_entrada.models import EstoqueEntrada
-from produto.models import Produto
-from .serializers import EstoqueEntradaSerializer
 from produto.api.serializers import ProdutoSerializer
 from produto.api.viewsets import ProdutoViewSet
 from produto.models import Produto
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+
+from .serializers import EstoqueEntradaSerializer
 
 
 class EstoqueEntradaViewSet(ModelViewSet):
@@ -25,7 +25,6 @@ class EstoqueEntradaViewSet(ModelViewSet):
         produto = Produto.objects.get(id=request.data['produto'])
         produto.quantidade_estoque = produto_data[0]['quantidade_estoque']
         produto.save()
-        
 
         entrada_serializer = self.get_serializer(data=request.data)
         entrada_serializer.is_valid(raise_exception=True)

@@ -1,11 +1,8 @@
-from rest_framework.serializers import ModelSerializer
-from produto.api.serializers import ProdutoSerializer
 from estoque_entrada.models import EstoqueEntrada
-
+from rest_framework.serializers import ModelSerializer
 
 
 class EstoqueEntradaSerializer(ModelSerializer):
-    # produto = ProdutoSerializer()
 
     class Meta:
         model = EstoqueEntrada
