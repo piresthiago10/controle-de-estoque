@@ -1,6 +1,8 @@
 # Controle de Estoque
 Simples controle de estoque
 
+# Em construção.
+
 django-admin startproject controle_de_estoque . (ponto para não criar sublevel)
 python3 manage.py migrate
 python3 manage.py makemigrtions
