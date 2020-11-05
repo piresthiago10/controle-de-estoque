@@ -2,6 +2,8 @@ from estoque_saida.models import EstoqueSaida
 from produto.api.serializers import ProdutoSerializer
 from produto.models import Produto
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -11,8 +13,12 @@ from .serializers import EstoqueSaidaSerializer
 class EstoqueSaidaViewSet(ModelViewSet):
     queryset = EstoqueSaida.objects.all()
     serializer_class = EstoqueSaidaSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
 
     def create(self, request, *args, **kwargs):
+
+        # request.data['usuario'] = request.user.pk
 
         produto_queryset = Produto.objects.filter(id=request.data['produto'])
         quantidade_saida = int(request.data['quantidade_saida'])

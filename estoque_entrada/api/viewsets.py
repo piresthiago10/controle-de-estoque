@@ -3,6 +3,8 @@ from produto.api.serializers import ProdutoSerializer
 from produto.api.viewsets import ProdutoViewSet
 from produto.models import Produto
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -12,6 +14,8 @@ from .serializers import EstoqueEntradaSerializer
 class EstoqueEntradaViewSet(ModelViewSet):
     queryset = EstoqueEntrada.objects.all()
     serializer_class = EstoqueEntradaSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
 
     def create(self, request, *args, **kwargs):
 
@@ -25,7 +29,8 @@ class EstoqueEntradaViewSet(ModelViewSet):
         produto = Produto.objects.get(id=request.data['produto'])
         produto.quantidade_estoque = produto_data[0]['quantidade_estoque']
         produto.save()
-
+        print(request.data['usuario'])
+        # request.data[0]['usuario'] = request.user.pk
         entrada_serializer = self.get_serializer(data=request.data)
         entrada_serializer.is_valid(raise_exception=True)
         self.perform_create(entrada_serializer)
