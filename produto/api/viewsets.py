@@ -10,8 +10,8 @@ from .serializers import ProdutoSerializer
 class ProdutoViewSet(ModelViewSet):
     # queryset = Produto.objects.all()
     serializer_class = ProdutoSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
+    # authentication_classes = [TokenAuthentication]
 
     def get_queryset(self):
         return Produto.objects.all()
